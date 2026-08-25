@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TO DO LIST</title>
+    <meta name="theme-color" content="#202020" />
+    <link rel="manifest" href="./manifest.json" />
+  </head>
+
+  <body bgcolor="black" text="whitesmoke">
+    <br /><br />
+
+    <center>
+      <table
+        width="500"
+        cellpadding="25"
+        cellspacing="0"
+        bgcolor="#202020"
+        border="1"
+        bordercolor="#444"
+      >
+        <tr>
+          <td>
+            <center>
+              <h1>📝 TO DO LIST</h1>
+              <p>Stay organized and get things done!</p>
+            </center>
+
+            <br />
+
+            <form id="form">
+              <center>
+                <input
+                  type="text"
+                  name="task"
+                  id="task"
+                  placeholder="Enter your task..."
+                  size="35"
+                />
+
+                &nbsp;
+
+                <button
+                  type="submit"
+                  style="background-color: brown; color: white"
+                >
+                  ADD
+                </button>
+              </center>
+            </form>
+
+            <br />
+            <hr color="#444" />
+            <br />
+
+            <h3>📋 Your Tasks</h3>
+
+            <div id="alltask"></div>
+          </td>
+        </tr>
+      </table>
+    </center>
+
+    <script src="./project7.js" defer></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("./service-worker.js")
+          .then(() => {
+            console.log("Service Worker Registered");
+          })
+          .catch((error) => {
+            console.log("Service Worker Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
