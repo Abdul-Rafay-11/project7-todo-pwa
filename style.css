@@ -1,0 +1,225 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #0f0f23;
+  color: #e0e0e0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.app {
+  width: 100%;
+  max-width: 500px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.header p {
+  font-size: 14px;
+  color: #888;
+  margin-top: 6px;
+}
+
+/* Input */
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1px solid #2a2a4a;
+  border-radius: 12px;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #6c63ff;
+}
+
+.input-group input::placeholder {
+  color: #555;
+}
+
+.input-group button {
+  padding: 14px 24px;
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.input-group button:hover {
+  background: #5a52e0;
+}
+
+.input-group button:active {
+  transform: scale(0.96);
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 24px;
+}
+
+.section h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #555;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1a1a2e;
+}
+
+.done-section h3 {
+  color: #4caf50;
+  border-bottom-color: #1b3a1f;
+}
+
+/* Task Item */
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #1a1a2e;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: transform 0.2s, opacity 0.3s;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task.done {
+  opacity: 0.5;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 15px;
+  word-break: break-word;
+}
+
+.task.done .task-text {
+  text-decoration: line-through;
+  color: #666;
+}
+
+.task-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.task-actions button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.task-actions button:active {
+  transform: scale(0.92);
+}
+
+.btn-done {
+  background: #1b3a1f;
+  color: #4caf50;
+}
+
+.btn-done:hover {
+  background: #245a2a;
+}
+
+.btn-undo {
+  background: #3a2a1b;
+  color: #ff9800;
+}
+
+.btn-undo:hover {
+  background: #5a3a1b;
+}
+
+.btn-delete {
+  background: #3a1b1b;
+  color: #f44336;
+}
+
+.btn-delete:hover {
+  background: #5a1b1b;
+}
+
+/* Empty State */
+.empty {
+  text-align: center;
+  padding: 32px;
+  color: #444;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .input-group input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .input-group button {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+
+  .task {
+    padding: 12px;
+  }
+}

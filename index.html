@@ -4,75 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TO DO LIST</title>
-    <meta name="theme-color" content="#202020" />
+    <meta name="theme-color" content="#0f0f23" />
     <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
+  <body>
+    <div class="app">
+      <div class="header">
+        <h1>TO DO LIST</h1>
+        <p>Stay organized and get things done!</p>
+      </div>
 
-  <body bgcolor="black" text="whitesmoke">
-    <br /><br />
+      <form id="form">
+        <div class="input-group">
+          <input
+            type="text"
+            id="task"
+            placeholder="Enter your task..."
+            autocomplete="off"
+          />
+          <button type="submit">ADD</button>
+        </div>
+      </form>
 
-    <center>
-      <table
-        width="500"
-        cellpadding="25"
-        cellspacing="0"
-        bgcolor="#202020"
-        border="1"
-        bordercolor="#444"
-      >
-        <tr>
-          <td>
-            <center>
-              <h1>📝 TO DO LIST</h1>
-              <p>Stay organized and get things done!</p>
-            </center>
+      <div class="stats">
+        <span id="pending-count">0 pending</span>
+        <span id="done-count">0 done</span>
+      </div>
 
-            <br />
+      <div class="section" id="pending-section">
+        <h3>Pending Tasks</h3>
+        <div id="pending-tasks"></div>
+      </div>
 
-            <form id="form">
-              <center>
-                <input
-                  type="text"
-                  name="task"
-                  id="task"
-                  placeholder="Enter your task..."
-                  size="35"
-                />
-
-                &nbsp;
-
-                <button
-                  type="submit"
-                  style="background-color: brown; color: white"
-                >
-                  ADD
-                </button>
-              </center>
-            </form>
-
-            <br />
-            <hr color="#444" />
-            <br />
-
-            <h3>📋 Your Tasks</h3>
-
-            <div id="alltask"></div>
-          </td>
-        </tr>
-      </table>
-    </center>
+      <div class="section done-section" id="done-section">
+        <h3>Completed</h3>
+        <div id="done-tasks"></div>
+      </div>
+    </div>
 
     <script src="./project7.js" defer></script>
     <script>
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("./service-worker.js")
-          .then(() => {
-            console.log("Service Worker Registered");
-          })
-          .catch((error) => {
-            console.log("Service Worker Error:", error);
-          });
+          .then(() => console.log("Service Worker Registered"))
+          .catch((error) => console.log("Service Worker Error:", error));
       }
     </script>
   </body>
