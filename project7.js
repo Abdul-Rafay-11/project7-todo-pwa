@@ -1,11 +1,14 @@
 const form = document.querySelector("form");
 const input = document.querySelector("input");
 const pendingTasks = document.getElementById("pending-tasks");
-const doneTasks = document.getElementById("done-tasks");
 const pendingCount = document.getElementById("pending-count");
 const doneCount = document.getElementById("done-count");
 const pendingSection = document.getElementById("pending-section");
-const doneSection = document.getElementById("done-section");
+const doneHeader = document.getElementById("done-header");
+const modalOverlay = document.getElementById("modal-overlay");
+const modalClose = document.getElementById("modal-close");
+const modalBody = document.getElementById("modal-body");
+const doneBadge = document.getElementById("done-badge");
 
 let tasks = (JSON.parse(localStorage.getItem("tasks")) || []).map((item) =>
   typeof item === "string" ? { text: item, done: false } : item
@@ -13,15 +16,6 @@ let tasks = (JSON.parse(localStorage.getItem("tasks")) || []).map((item) =>
 
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function updateCounts() {
-  const pending = tasks.filter((t) => !t.done).length;
-  const done = tasks.filter((t) => t.done).length;
-  pendingCount.textContent = `${pending} pending`;
-  doneCount.textContent = `${done} done`;
-  pendingSection.style.display = pending === 0 ? "none" : "block";
-  doneSection.style.display = done === 0 ? "none" : "block";
 }
 
 function createTaskElement(taskObj) {
@@ -43,6 +37,9 @@ function createTaskElement(taskObj) {
     taskObj.done = !taskObj.done;
     saveTasks();
     renderAll();
+    if (modalOverlay.classList.contains("active")) {
+      renderModal();
+    }
   });
 
   const deleteBtn = document.createElement("button");
@@ -53,6 +50,9 @@ function createTaskElement(taskObj) {
     tasks = tasks.filter((t) => t !== taskObj);
     saveTasks();
     renderAll();
+    if (modalOverlay.classList.contains("active")) {
+      renderModal();
+    }
   });
 
   actions.appendChild(doneBtn);
@@ -65,7 +65,6 @@ function createTaskElement(taskObj) {
 
 function renderAll() {
   pendingTasks.innerHTML = "";
-  doneTasks.innerHTML = "";
 
   const pending = tasks.filter((t) => !t.done);
   const done = tasks.filter((t) => t.done);
@@ -74,14 +73,12 @@ function renderAll() {
     pendingTasks.innerHTML = '<div class="empty">No pending tasks</div>';
   }
 
-  if (done.length === 0) {
-    doneTasks.innerHTML = '<div class="empty">No completed tasks</div>';
-  }
-
   pending.forEach((t) => pendingTasks.appendChild(createTaskElement(t)));
-  done.forEach((t) => doneTasks.appendChild(createTaskElement(t)));
 
-  updateCounts();
+  pendingCount.textContent = `${pending.length} pending`;
+  doneCount.textContent = `${done.length} done`;
+  doneBadge.textContent = done.length;
+  pendingSection.style.display = pending.length === 0 ? "none" : "block";
 }
 
 form.addEventListener("submit", (e) => {
@@ -97,4 +94,30 @@ form.addEventListener("submit", (e) => {
   input.focus();
 });
 
+function renderModal() {
+  const done = tasks.filter((t) => t.done);
+  modalBody.innerHTML = "";
+
+  if (done.length === 0) {
+    modalBody.innerHTML = '<div class="empty">No completed tasks yet</div>';
+  } else {
+    done.forEach((t) => modalBody.appendChild(createTaskElement(t)));
+  }
+}
+
 renderAll();
+
+doneHeader.addEventListener("click", () => {
+  renderModal();
+  modalOverlay.classList.add("active");
+});
+
+modalClose.addEventListener("click", () => {
+  modalOverlay.classList.remove("active");
+});
+
+modalOverlay.addEventListener("click", (e) => {
+  if (e.target === modalOverlay) {
+    modalOverlay.classList.remove("active");
+  }
+});

@@ -1,7 +1,6 @@
-const CACHE_NAME = "todo-app-v3";
+const CACHE_NAME = "todo-app-v6";
 
 const FILES_TO_CACHE = [
-  "./",
   "./index.html",
   "./style.css",
   "./project7.js",
@@ -13,7 +12,11 @@ const FILES_TO_CACHE = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(FILES_TO_CACHE);
+      return Promise.all(
+        FILES_TO_CACHE.map((url) =>
+          cache.add(url).catch(() => console.log("Failed to cache:", url)),
+        ),
+      );
     }),
   );
 
@@ -34,7 +37,6 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Network-first: always try the network, fall back to cache when offline
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
@@ -45,6 +47,6 @@ self.addEventListener("fetch", (event) => {
           .then((cache) => cache.put(event.request, clone));
         return response;
       })
-      .catch(() => caches.match(event.request)),
+      .catch(() => caches.match(event.request).then((r) => r || fetch(event.request))),
   );
 });
